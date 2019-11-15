@@ -1,0 +1,61 @@
+ /** this program is translating decimal number to a binaric number
+ * the decimal number is represnted by a string from the input
+ * the number is no longer than the maximum size of unsigned int (2^32)
+ * the strtoul transfer the string to a long int number
+ *@Author (Nir Avigad)
+ *ID : 205644271
+ *Date : 12/11/2019
+ */
+
+
+
+#include <stdio.h>
+#include <stdlib.h>
+
+
+void translate_dec_hex(unsigned int);
+
+
+int main()
+{ 
+    char num[sizeof(unsigned int)*8] = "";
+    char *ptr;
+    unsigned int ret;
+
+    printf("Enter the number you want to convert: \n");
+    scanf("%s",&num[0]);
+    ret = strtoul(num,&ptr,10);
+    printf("Your number in a binaric base: ");
+    translate_dec_hex(ret);
+    return 0;  
+  }  
+
+/** checks if the number divides by 2 without remainder , 
+   prints 0 else prints 1 .
+ * divide the whole number by 2 
+ * @param num is the string that turned into integer in the main function
+*/
+
+void translate_dec_hex(unsigned int num)
+{
+
+     unsigned int binaricNum[32];
+
+     int i=0,j;
+
+    	if(num==0)
+	printf("0");
+
+	while (num>0)
+	{
+         binaricNum[i] = num % 2;
+       	  num/=2;
+	  i++;
+	}
+           
+    for (j=i-1;j >= 0;j--)
+	{
+            printf("%d",binaricNum[j]); 
+	}
+
+}
