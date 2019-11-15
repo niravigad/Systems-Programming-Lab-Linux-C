@@ -1,0 +1,62 @@
+/*
+ * This program finds all suffixes of a string, starting at the beginning of the
+ * string length from 1 to the length of the string
+ * the user need to choose the char he wants to look for it suffixes
+ * the word is no longer than the maximum size of MAX (127 chars)
+ *@Author (Nir Avigad)
+ *ID : 205644271
+ *Date : 12/11/2019
+ */
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#define MAX 127
+
+
+int suffix(char[],char);
+
+int main()
+{ 
+    char str[MAX];
+    int target;
+
+    printf("Enter your string : ");
+    fgets(str,sizeof(str),stdin);
+    printf("Enter your char: ");
+    target = fgetc(stdin);
+    
+    printf("%c ",target);
+    puts(str);
+
+    printf("number of suffix that found is : %d",suffix(str,target));
+
+    return 0;  
+
+ }  
+
+/**
+ * strchr searches for the first occurrence of the character c (an unsigned char)
+ *the string pointed to by the argument result , 
+ * when result = NULL it means we've reched to the end of the string or its empty.
+ * @param str[] is the string that came from the input
+ * @param target is the char that came from the input
+ * @return counter which is the number of the suffixes that found
+*/
+
+
+int suffix(char str[],char target)
+{    
+    char *result = str;
+	    int counter;
+    	while((result = strchr(result , target)) != NULL)
+	{
+	    puts(result);
+            result++;
+	    counter++;
+	}
+    return counter;
+}
+
+
+
+
