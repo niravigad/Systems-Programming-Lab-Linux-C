@@ -1,0 +1,126 @@
+/*This program gets from the user 30 names and initialize a list of names
+* the Main calls to get_name() 10 times , and after each call it will print a random *name to the output.
+*the program also check whether the names that initialized the input are different
+* if name is typed twice , the program will end with an error message
+*the program doesn't distinguish between lowercase and uppercase letters
+*the program initializes the names into a 2-D char (matrix) , so the maximum
+*length of each name is up 21 characters.
+*/
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+#include <string.h>
+#include <stdbool.h>
+#include <time.h>
+
+#define MAXNAMES 30
+#define MAXLENGTH 21
+
+  
+
+char names[MAXNAMES][MAXLENGTH];   /*the matrix of names*/
+int index; /* the index of the name in the matrix*/
+int isDifferent (char*,int);
+char* isLowerLetter (char*);
+char* get_name();
+char* Low;
+char* Diff;
+
+
+int main()
+{
+    time_t t;	
+    int i;
+	srand((unsigned)time(&t));/*  initialize random numer generator*/
+
+    	for(i=0;i<30;i++)
+	names[i][0] = '\0';
+	
+	printf("\nplease enter 30 different names:\n ");
+	for(index=i=0;i<30;i++,index++)
+	{   
+	    scanf("%[^\n]%*c",names[i]);
+	   if(i==0) /* no need to check the matrix if there is only one name*/
+	   continue;
+
+	   if(isDifferent(names[i],index))
+	    { 
+		 printf("the name is already exist");
+	        return 0;
+		}
+	        else
+	       continue;
+	    }	   
+	
+	
+	for(i=0;i<10;i++)
+	puts(get_name());
+
+
+return 0;
+
+}
+
+/*this function returns a pointer to an array of char( which is string) , 
+* , using malloc it saves it in the memory , in order to save the name after the loop
+* has ended when we go back to the main .
+* rand() returns a random number every time*/
+char* get_name()
+{
+
+    char *name;
+    name = (char *) malloc(20);
+    strcpy(name,names[rand() % 30]);
+
+    return name;
+
+}
+
+/*this function returns 1 if the name hasn't been initalized before .
+* it searches the whole matrix , except the index of the name that we check (index -1)
+* it use the function isLowerLetter , because the ASCII code of lower & upper case letter isn't the same , so we can't do the comparison approximately.
+* param Diff - the name being checked
+* paran index - the index in the matrix
+* param pos - in order to decrement the index , initialize a temporary variable in the same value which is equals to index
+* param result - returns int , if it equals to 0 the names are the same .
+*/
+
+int isDifferent (char* Diff,int index)
+{
+
+    int result,pos = index-1;
+    while(pos>=0)
+    {
+	result = strcmp(isLowerLetter(Diff),isLowerLetter(names[pos]));
+        if(result == 0)
+	{
+	    return 1;
+	}
+	pos--;
+    }
+return 0;
+	
+} 
+
+/*this function gets an uppercase alphabet string , convert it
+* to a lower case string , and returnes it back
+*/
+char* isLowerLetter (char* checkedName)
+{
+
+    int i=0;
+	/*copy the original string to temporary , in order to keep it safe a avoid aliasing*/
+	Low = (char *) malloc(20);
+	strcpy(Low,checkedName);    
+
+    while(Low[i]!='\0')/* last char in a string */
+    {
+        Low[i] = tolower(Low[i]);
+	i++;
+      }
+
+     return Low;
+ }
+
+
+
